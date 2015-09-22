@@ -1,4 +1,4 @@
-public class Player {
+public class Carte {
     public int ID;                        // ID du joueur
     private PVector position;
     private PVector direction;            // Direction x, y
@@ -7,14 +7,25 @@ public class Player {
     private int score;
     private String controle;              // ? droite ou gauche ?
   
-    public Player() {
+    public Carte() {
         
     }
     
-    public void Avancer() {
-      this.position.x += this.direction.x;
-      this.position.y += this.direction.y;
+    public afficher() {
+      
     }
+    
+    public update(Player[] tab)          // Modifier la carte en fonction des déplacements
+    {
+        loadPixels();
+        for(int i : tab)
+        {
+          
+          
+          
+    }
+    
+    
     
     public void changerDirection(boolean b)
     {
