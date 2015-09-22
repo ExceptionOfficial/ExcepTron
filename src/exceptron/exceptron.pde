@@ -7,7 +7,11 @@
 
 final int SCREEN_WIDTH = 1366;
 final int SCREEN_HEIGHT = 768;          // Résolution HD
+final int NB_PIXELS = SCREEN_WIDTH + SCREEN_HEIGHT;
 final int FrameRate = 30;               // Frames par seconde
+
+// Tailles
+final int taille = 10;                  // Taille en px de la tête du snake
 
 // Couleurs
 final int rouge = color(255,0,0);  
@@ -33,20 +37,21 @@ void draw() {
 }
 
 
-/* pour la collision, utiliser les fonctions loadPixels et updatePixels,
-qui permettent de charger la grille des pixels dans le tableau pixels
-Utilisation :
-    loadPixels();
-    for i ....
-      pixels[i] = pixels[i + 1];
-    updatePixels();
-*/
 
 /* Tailles idéales :
       ellipse(x,y, 10, 10) pour la tête du snake
       strokeWeight(10) pour le corps
 */
 
+/*
+   Dans le gestionnaire de collision penser à ajouter les murs : ne pas pouvoir passer un mur et du fait de la taille
+   de 10, ne pas pouvoir approcher la tête du snake à moins de 5px du mur.
+   Pour rappel dans CurveFever, toucher le mur = mort
+*/
+
+/* A ajouter :
+      A l'apparition du joueur, faire apparaître une flèche pour que celui-ci sache dans quelle direction il va se lancer.
+*/
 
 void keyPressed() {
  /*if((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) {

@@ -11,6 +11,14 @@ public class Player {
         
     }
     
+    public getX() {
+      return this.position.x();
+    }
+    
+    public getY() {
+      return this.position.y();
+    }
+    
     public void Avancer() {
       this.position.x += this.direction.x;
       this.position.y += this.direction.y;

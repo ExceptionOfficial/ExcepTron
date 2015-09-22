@@ -1,44 +1,47 @@
 public class Carte {
-    public int ID;                        // ID du joueur
-    private PVector position;
-    private PVector direction;            // Direction x, y
-    private int vitesse;                  // Vitesse vecteur x, y 
-    private color couleur;                // Couleur du joueur
-    private int score;
-    private String controle;              // ? droite ou gauche ?
-  
+    private IntList collisions;                    // Liste des joueurs ayant déjà eu une collision
+    
     public Carte() {
+        collisions = new IntList();                // Création d'une liste vide de joueurs en collision
         
+        // Bordures
+        noFill();                                  // Pas de remplissage
+        stroke(rouge);                             // Couleur à choisir
+        strokeWeight(taille);                      // Taille de bordure
+        rect(0,0,SCREEN_WIDTH, SCREEN_HEIGHT);     // Mise en place bordure
     }
     
-    public afficher() {
-      
+    public getCollisions() {
+      return this.collisions;
     }
     
-    public update(Player[] tab)          // Modifier la carte en fonction des déplacements
+    // Méthode écrite en supposant que la vérification de collisions est faite auparavant
+    public update(Player[] joueurs)              // Modifier la carte en fonction des déplacements
     {
-        loadPixels();
-        for(int i : tab)
+      int pX; int pY; int pix;
+      Player p;                                  // Variables temporaires
+      int t = taille/2;                          // Raccourci d'écriture
+      
+      
+      loadPixels();                              // On charge la grille de pixels
+      
+      for(int k : joueurs)
+      {
+        p = joueurs[k];
+        if(! this.collisions.hasValue(p.ID))      // Si le joueurs n'est pas hors jeu
         {
-          
-          
-          
-    }
-    
-    
-    
-    public void changerDirection(boolean b)
-    {
+          pX = p.getX();    pY = p.getY()         // Récupération des coordonnées
+          for(int i = pY - t ; i <= pY + t ; i++)
+          {
+            for(int j = px - t ; j <= pX + t ; j++)
+            {
+              pix = i + j * SCREEN_WIDTH;         // Calcul du pixel concerné
+              pixels[pix] = p.getColor();         // On place la couleur
+            }  // Fin boucle horizontal
+          }    // Fin boucle vertical
+        }      // Fin if
+      }        // Fin boucle joueurs
       
-    }
-    
-    public void Afficher() {
-      stroke(couleur);
-      
-      
-    }
-    
-    public void kill() {
-      
+      updatePixels();                              // On place les pixels à l'écran
     }
 }
