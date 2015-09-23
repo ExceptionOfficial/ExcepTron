@@ -2,7 +2,7 @@
 /*                                  Exception                               */
 /*                                                                          */
 /*          Projet ExcepTron : Création d'un snake multi-joueurs            */
-/* exceptron.pde                                        Processing 3        */
+/*     exceptron.pde                                        Processing 3    */
 /****************************************************************************/
 
 final int SCREEN_WIDTH = 1366;
@@ -22,14 +22,31 @@ final int blanc = color(255,255,255);
 
 // Array de joueurs
 ArrayList<Player> joueurs;
+Carte map;
+
+// Paramètres
 
 void setup() {
+  int nbjoueurs = 4;                    // Nombre de joueurs
+  
   size(1366, 768);                      // Résolution HD
   noStroke();                           // Pas de contours
   background(noir);                     // Fond noir
   frameRate(30);                        // 30 FPS
   smooth();                             // Anti-aliasing
-  joueurs = new ArrayList();
+  
+  map = new Carte();
+  joueurs = new ArrayList();            // Création des joueurs
+  for(int i = 1 ; i <= nbjoueurs ; i++)
+  {
+    joueurs.add(new Player(i, "ds"));
+  }
+  for(int i = 1 ; i <= nbjoueurs ; i++)
+  {
+    joueurs.get(i-1).Afficher();
+    joueurs.get(i-1).AfficherDirection();
+  }
+  
 }
 
 void draw() {

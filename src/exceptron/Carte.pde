@@ -11,29 +11,29 @@ public class Carte {
         rect(0,0,SCREEN_WIDTH, SCREEN_HEIGHT);     // Mise en place bordure
     }
     
-    public getCollisions() {
+    public IntList getCollisions() {
       return this.collisions;
     }
     
     // Méthode écrite en supposant que la vérification de collisions est faite auparavant
-    public update(Player[] joueurs)              // Modifier la carte en fonction des déplacements
+    public void update(ArrayList<Player> joueurs)  // Modifier la carte en fonction des déplacements
     {
       int pX; int pY; int pix;
-      Player p;                                  // Variables temporaires
-      int t = taille/2;                          // Raccourci d'écriture
+      Player p;                                    // Variables temporaires
+      int t = taille/2;                            // Raccourci d'écriture
       
       
-      loadPixels();                              // On charge la grille de pixels
+      loadPixels();                                // On charge la grille de pixels
       
-      for(int k : joueurs)
+      for(int k = 0 ; k < joueurs.size() ; k++)
       {
-        p = joueurs[k];
-        if(! this.collisions.hasValue(p.ID))      // Si le joueurs n'est pas hors jeu
+        p = joueurs.get(k);
+        if(! this.collisions.hasValue(p.ID))       // Si le joueurs n'est pas hors jeu
         {
-          pX = p.getX();    pY = p.getY()         // Récupération des coordonnées
+          pX = (int) p.getX();    pY = (int) p.getY();      // Récupération des coordonnées
           for(int i = pY - t ; i <= pY + t ; i++)
           {
-            for(int j = px - t ; j <= pX + t ; j++)
+            for(int j = pX - t ; j <= pX + t ; j++)
             {
               pix = i + j * SCREEN_WIDTH;         // Calcul du pixel concerné
               pixels[pix] = p.getColor();         // On place la couleur
