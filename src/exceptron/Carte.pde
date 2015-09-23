@@ -15,6 +15,10 @@ public class Carte {
       return this.collisions;
     }
     
+    public void setCollisions(int ID) {
+      this.collisions.append(ID);
+    }
+    
     // Méthode écrite en supposant que la vérification de collisions est faite auparavant
     public void update(ArrayList<Player> joueurs)  // Modifier la carte en fonction des déplacements
     {
@@ -22,26 +26,15 @@ public class Carte {
       Player p;                                    // Variables temporaires
       int t = taille/2;                            // Raccourci d'écriture
       
-      
-      loadPixels();                                // On charge la grille de pixels
-      
       for(int k = 0 ; k < joueurs.size() ; k++)
       {
         p = joueurs.get(k);
         if(! this.collisions.hasValue(p.ID))       // Si le joueurs n'est pas hors jeu
         {
-          pX = (int) p.getX();    pY = (int) p.getY();      // Récupération des coordonnées
-          for(int i = pY - t ; i <= pY + t ; i++)
-          {
-            for(int j = pX - t ; j <= pX + t ; j++)
-            {
-              pix = i + j * SCREEN_WIDTH;         // Calcul du pixel concerné
-              pixels[pix] = p.getColor();         // On place la couleur
-            }  // Fin boucle horizontal
-          }    // Fin boucle vertical
+          noStroke();
+          fill(p.getColor());
+          ellipse(p.getX(), p.getY(), taille, taille);
         }      // Fin if
       }        // Fin boucle joueurs
-      
-      updatePixels();                              // On place les pixels à l'écran
     }
 }
