@@ -2,16 +2,14 @@
 /*                                  Exception                               */
 /*                                                                          */
 /*          Projet ExcepTron : Création d'un snake multi-joueurs            */
-/*     exceptron.pde                                        Processing 3    */
+/*                                                                          */
+/*     exceptron.pde                                       Processing 3.0b6 */
 /****************************************************************************/
 
 final int SCREEN_WIDTH = 1366;
 final int SCREEN_HEIGHT = 768;          // Résolution HD
 final int NB_PIXELS = SCREEN_WIDTH + SCREEN_HEIGHT;
-final int FrameRate = 30;               // Frames par seconde
-
-// Tailles
-final int taille = 10;                  // Taille en px de la tête du snake
+final int FRAMERATE = 30;               // Frames par seconde
 
 // Couleurs
 final int rouge = color(255,0,0);  
@@ -32,25 +30,24 @@ void setup() {
   size(1366, 768);                      // Résolution HD
   noStroke();                           // Pas de contours
   background(noir);                     // Fond noir
-  frameRate(30);                        // 30 FPS
+  frameRate(FRAMERATE);                 // 30 FPS
   smooth();                             // Anti-aliasing
   
   map = new Carte();
   joueurs = new ArrayList();            // Création des joueurs
-  for(int i = 1 ; i <= nbjoueurs ; i++)
-  {
+  for(int i = 1 ; i <= nbjoueurs ; i++) {
     joueurs.add(new Player(i, "ds"));
   }
-  for(int i = 1 ; i <= nbjoueurs ; i++)
-  {
-    joueurs.get(i-1).Afficher();
-    joueurs.get(i-1).AfficherDirection();
+  for(int i = 1 ; i <= nbjoueurs ; i++) {
+    joueurs.get(i-1).afficher();
+    joueurs.get(i-1).afficherDirection();
   }
   
 }
 
 void draw() {
       /* Appel au KeyManager ? ==> Classe KeyManager à créer */
+      /* Appel à TaMere ? ==> Classe TaMere à créer */
 }
 
 

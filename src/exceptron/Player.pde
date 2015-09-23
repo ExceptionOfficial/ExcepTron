@@ -1,29 +1,32 @@
 public class Player {
-    public int ID;                        // ID du joueur
+    public int id;                        // ID du joueur
     private PVector position;
-    private PVector direction;            // Direction x, y
-    private int vitesse;                  // Vitesse vecteur x, y 
+    private PVector direction;            // Direction x : r(vitesse), y : theta
     private color couleur;                // Couleur du joueur
     private int score;
     private String controle;              // ? droite ou gauche ?
+    private PImage tete;
+    
+    public static final int tailleTete = 10;
   
     public Player(int i, String c) {
-        this.ID = i;                      // ID choisi dans le setup
+        this.id = i;                      // ID choisi dans le setup
         
         // Placement de départ : aléatoire pour le moment
         this.position = new PVector(
-            taille / 2 + random(SCREEN_WIDTH - taille/2),
-            taille / 2 + random(SCREEN_HEIGHT - taille/2));
+            tailleTete / 2 + random(SCREEN_WIDTH - tailleTete/2),
+            tailleTete / 2 + random(SCREEN_HEIGHT - tailleTete/2));
         
         // Direction de départ : 4 possibilités : haut, bas, droite, gauche
-        this.direction = new PVector(random(2) - 1, random(2) - 1);                  // RAND A FAIRE CÔTE NEGATIF AUSSI !
-        
-        this.vitesse = 1;                  // Vitesse par défaut
-        
+        this.direction = new PVector(3, random(-PI, PI));
+
         // Pareil, couleur aléatoire
-        this.couleur = color(random(255), random(255), random(255));
+        int tirageCouleur = (int) random(0,255);
+        this.couleur = color(tirageCouleur, (255 - tirageCouleur) % 200, tirageCouleur*(tirageCouleur + 255) % 255);
         this.score = 0;                    // Score  = 0
         this.controle = c;                 // Contrôle envoyés par le setup
+        
+        this.tete = 
     }
     
     public float getX() {
@@ -34,47 +37,33 @@ public class Player {
       return this.position.y;
     }
     
-    public int getColor() {
+    public color getColor() {
       return this.couleur;
     }
     
-    public void Afficher() {
+    public void afficher() {
       noStroke();
       fill(this.getColor());
-      ellipse(this.getX(), this.getY(), taille, taille);
+      ellipse(this.getX(), this.getY(), tailleTete, tailleTete);    /* mauvais NE PAS REGENERER A CHAQUE FOIS l'ellipse */
     }
     
-    public void AfficherDirection() {
-      float x = this.position.x;
-      float y = this.position.y;
-      float x2 = x + this.direction.x * 3 * taille;
-      float y2 = y + this.direction.y * 3 * taille;
-      
+    public void afficherDirection() {
+      float x = direction.x*cos(direction.y);
+      float y = direction.x*sin(direction.y);
       stroke(blanc);  strokeWeight(3);
-      line(x, y, x2, y2);
-      pushMatrix();
-      translate(x2, y2);
-      float a = atan2(x - x2, y2 - y);
-      rotate(a);
-      line(0, 0, -5, -5);
-      line(0, 0, 5, -5);
-      popMatrix();
+      line(this.position.x, this.position.y, this.position.x+11*x, this.position.y+11*y);
     } 
     
-    public void Avancer() {
+    public void avancer() {
       this.position.x += this.direction.x;
       this.position.y += this.direction.y;
     }
     
-    public void changerDirection(boolean b)      // Vrai = droite, faux = gauche
-    {
-      if(b)
-      {
-        //direction.getAngle();
-      }
-      else
-      {
-        
+    public void changerDirection(boolean b) {     // Vrai = droite, faux = gauche
+      if(b) {
+        direction.y -= QUARTER_PI /16;
+      } else {
+        direction.y += QUARTER_PI /16;
       }
     }
     

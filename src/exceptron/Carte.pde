@@ -7,7 +7,7 @@ public class Carte {
         // Bordures
         noFill();                                  // Pas de remplissage
         stroke(rouge);                             // Couleur à choisir
-        strokeWeight(taille);                      // Taille de bordure
+        strokeWeight(10);                      // Taille de bordure
         rect(0,0,SCREEN_WIDTH, SCREEN_HEIGHT);     // Mise en place bordure
     }
     
@@ -16,25 +16,19 @@ public class Carte {
     }
     
     // Méthode écrite en supposant que la vérification de collisions est faite auparavant
-    public void update(ArrayList<Player> joueurs)  // Modifier la carte en fonction des déplacements
-    {
+    public void update(ArrayList<Player> joueurs) {  // Modifier la carte en fonction des déplacements
       int pX; int pY; int pix;
       Player p;                                    // Variables temporaires
-      int t = taille/2;                            // Raccourci d'écriture
-      
+      int t = 10/2;                            // Raccourci d'écriture
       
       loadPixels();                                // On charge la grille de pixels
       
-      for(int k = 0 ; k < joueurs.size() ; k++)
-      {
+      for(int k = 0 ; k < joueurs.size() ; k++) {
         p = joueurs.get(k);
-        if(! this.collisions.hasValue(p.ID))       // Si le joueurs n'est pas hors jeu
-        {
+        if(! this.collisions.hasValue(p.id)) {      // Si le joueurs n'est pas hors jeu
           pX = (int) p.getX();    pY = (int) p.getY();      // Récupération des coordonnées
-          for(int i = pY - t ; i <= pY + t ; i++)
-          {
-            for(int j = pX - t ; j <= pX + t ; j++)
-            {
+          for(int i = pY - t ; i <= pY + t ; i++) {
+            for(int j = pX - t ; j <= pX + t ; j++) {
               pix = i + j * SCREEN_WIDTH;         // Calcul du pixel concerné
               pixels[pix] = p.getColor();         // On place la couleur
             }  // Fin boucle horizontal
