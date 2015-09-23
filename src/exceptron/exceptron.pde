@@ -18,14 +18,14 @@ final int bleu  = color(0,0,255);
 final int noir  = color(0,0,0); 
 final int blanc = color(255,255,255);
 
-// Array de joueurs
-ArrayList<Player> joueurs;
-Carte map;
+ArrayList<Player> joueurs;          // Array de joueurs
+Carte map;                          // Carte
 
 // Paramètres
+int nbjoueurs;
 
 void setup() {
-  int nbjoueurs = 4;                    // Nombre de joueurs
+  nbjoueurs = 4;                    // Nombre de joueurs
   
   size(1366, 768);                      // Résolution HD
   noStroke();                           // Pas de contours
@@ -45,12 +45,24 @@ void setup() {
   
 }
 
-void draw() {
+void draw() { //<>//
+  Player p;                              // Variables temporaires
+  
+  for(int i = 1 ; i <= nbjoueurs ; i++)
+  {
+    p = joueurs.get(i - 1);              // Raccourci d'écriture
+    if(! map.getCollisions().hasValue(p.id))
+    {
+      p.avancer();
+      //p.VerifCollisions(map);
+    }
+    println("Joueur1 x : ", joueurs.get(0).getX(), ", Y : ", joueurs.get(0).getY());
+    
+  }
+  map.update(joueurs);
       /* Appel au KeyManager ? ==> Classe KeyManager à créer */
       /* Appel à TaMere ? ==> Classe TaMere à créer */
 }
-
-
 
 /* Tailles idéales :
       ellipse(x,y, 10, 10) pour la tête du snake

@@ -26,7 +26,7 @@ public class Player {
         this.score = 0;                    // Score  = 0
         this.controle = c;                 // Contrôle envoyés par le setup
         
-        this.tete = 
+        //this.tete = ;
     }
     
     public float getX() {
