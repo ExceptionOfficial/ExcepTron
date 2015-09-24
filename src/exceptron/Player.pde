@@ -55,8 +55,8 @@ public class Player {
     } 
     
     public void avancer() {
-      this.position.x += this.direction.x;
-      this.position.y += this.direction.y;
+      this.position.x += this.direction.x*cos(this.direction.y);
+      this.position.y += this.direction.x*sin(this.direction.y);
     }
     
     public void changerDirection(boolean b) {     // Vrai = droite, faux = gauche

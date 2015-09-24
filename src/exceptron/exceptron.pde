@@ -80,7 +80,9 @@ void draw() { //<>//
 */
 
 void keyPressed() {
- /*if((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) {
-    int keyIndex;
-  }*/
+  if(key == 'q') {
+    joueurs.get(0).changerDirection(true);
+  } else if(key == 'd') {
+    joueurs.get(0).changerDirection(false);
+  }
 }
