@@ -37,6 +37,14 @@ public class Player {
       return this.position.y;
     }
     
+    public String getControl() {
+      return this.controle;
+    }
+    
+    public void setControl(String c) {
+      this.controle = c;
+    }
+    
     public color getColor() {
       return this.couleur;
     }

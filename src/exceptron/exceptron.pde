@@ -20,6 +20,7 @@ final int blanc = color(255,255,255);
 
 ArrayList<Player> joueurs;          // Array de joueurs
 Carte map;                          // Carte
+KeyManager km;                      // Gestionnaire de clavier
 
 // Paramètres
 int nbjoueurs;
@@ -35,9 +36,14 @@ void setup() {
   
   map = new Carte();
   joueurs = new ArrayList();            // Création des joueurs
-  for(int i = 1 ; i <= nbjoueurs ; i++) {
-    joueurs.add(new Player(i, "ds"));
-  }
+  km = new KeyManager();
+  
+  /* ajout des joueurs */
+  joueurs.add(new Player(0, "qs"));
+  joueurs.add(new Player(1, "df"));
+  joueurs.add(new Player(2, "45"));
+  joueurs.add(new Player(3, "op"));
+  
   for(int i = 1 ; i <= nbjoueurs ; i++) {
     joueurs.get(i-1).afficher();
     joueurs.get(i-1).afficherDirection();
@@ -48,11 +54,16 @@ void setup() {
 void draw() { //<>//
   Player p;                              // Variables temporaires
   
-  for(int i = 1 ; i <= nbjoueurs ; i++)
-  {
+  for(int i = 1 ; i <= nbjoueurs ; i++) {
     p = joueurs.get(i - 1);              // Raccourci d'écriture
-    if(! map.getCollisions().hasValue(p.id))
-    {
+    
+    if(km.isPressed(p.getControl().charAt(0))) {  // si la touche gauche est pressee
+      p.changerDirection(true);
+    } else if(km.isPressed(p.getControl().charAt(1))) {  // si la touche droite est pressee
+      p.changerDirection(false);
+    }
+    
+    if(! map.getCollisions().hasValue(p.id)) {
       p.avancer();
       //p.VerifCollisions(map);
     }
@@ -80,9 +91,9 @@ void draw() { //<>//
 */
 
 void keyPressed() {
-  if(key == 'q') {
-    joueurs.get(0).changerDirection(true);
-  } else if(key == 'd') {
-    joueurs.get(0).changerDirection(false);
-  }
+  km.update(key, true);
+}
+
+void keyReleased() {
+  km.update(key, false);
 }
