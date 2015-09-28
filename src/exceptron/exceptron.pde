@@ -46,7 +46,7 @@ void setup() {
   
   for(int i = 1 ; i <= nbjoueurs ; i++) {
     joueurs.get(i-1).afficher();
-    joueurs.get(i-1).afficherDirection();
+    //joueurs.get(i-1).afficherDirection();
   }
   
 }
@@ -65,14 +65,16 @@ void draw() { //<>//
     
     if(! map.getCollisions().hasValue(p.id)) {
       p.avancer();
-      //p.VerifCollisions(map);
+      map.verifCollisions(p);
     }
-    println("Joueur1 x : ", joueurs.get(0).getX(), ", Y : ", joueurs.get(0).getY());
-    
   }
+  
+  //println("Collisions actuelles : " + map.getCollisions());
   map.update(joueurs);
-      /* Appel au KeyManager ? ==> Classe KeyManager à créer */
-      /* Appel à TaMere ? ==> Classe TaMere à créer */
+  if(map.getCollisions().size() >= joueurs.size())
+  {
+    //exit();
+  }
 }
 
 /* Tailles idéales :
