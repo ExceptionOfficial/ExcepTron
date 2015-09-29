@@ -1,4 +1,4 @@
-/****************************************************************************/
+/****************************************************************************/ //<>//
 /*                                  Exception                               */
 /*                                                                          */
 /*          Projet ExcepTron : Création d'un snake multi-joueurs            */
@@ -26,7 +26,7 @@ KeyManager km;                      // Gestionnaire de clavier
 int nbjoueurs;
 
 void setup() {
-  nbjoueurs = 4;                    // Nombre de joueurs
+  nbjoueurs = 4;                        // Nombre de joueurs
   
   size(1366, 768);                      // Résolution HD
   noStroke();                           // Pas de contours
@@ -46,7 +46,7 @@ void setup() {
   
   for(int i = 1 ; i <= nbjoueurs ; i++) {
     joueurs.get(i-1).afficher();
-    //joueurs.get(i-1).afficherDirection();
+    joueurs.get(i-1).afficherDirection();
   }
   
 }
@@ -61,20 +61,16 @@ void draw() { //<>//
       p.changerDirection(true);
     } else if(km.isPressed(p.getControl().charAt(1))) {  // si la touche droite est pressee
       p.changerDirection(false);
-    }
+    }                                    // Fin if
     
     if(! map.getCollisions().hasValue(p.id)) {
       p.avancer();
       map.verifCollisions(p);
     }
+    
+    println("Collisions : " + map.getCollisions());
   }
-  
-  //println("Collisions actuelles : " + map.getCollisions());
   map.update(joueurs);
-  if(map.getCollisions().size() >= joueurs.size())
-  {
-    //exit();
-  }
 }
 
 /* Tailles idéales :

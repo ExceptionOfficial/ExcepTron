@@ -14,13 +14,10 @@ public class Carte {
         for(j = 0 ; j < height ; j++)
         {
           if(i <= bordures || i >= width - bordures || j <= bordures || j >= height - bordures)
-          {
             matrix[i][j] = true;
-          }
+            
           else
-          {
             matrix[i][j] = false;
-          }
         }    // Fin for horizontal
       }      // Fin for vertical
       
@@ -48,7 +45,7 @@ public class Carte {
       int i, j;                                        // Variables de boucles
       int x = (int) p.getX();    int y = (int) p.getY();
       
-      i = x - p.tailleTete / 2 + 1;  
+      i = (int) x - p.tailleTete / 2 + 1;  
       while(i < x + p.tailleTete / 2 && b)
       {
         j = y - p.tailleTete / 2 + 1;
@@ -74,16 +71,19 @@ public class Carte {
       {
         p = joueurs.get(k);
         x = (int) p.getX();    y = (int) p.getY();
-        for( i = x - p.tailleTete / 2 + 1 ; i < x + p.tailleTete / 2 ; i++)
-        {
-          for(j = y - p.tailleTete / 2 + 1 ; j < y + p.tailleTete / 2 ; j++)
-          {
-            this.matrix[i][j] = true;
-          }    // Fin for vertical
-        }      // Fin for horizontal
         
-        if(! this.collisions.hasValue(p.id))           // Si le joueurs n'est pas hors jeu
+        for( float O = 0 ; O < 2 * PI ; O = O + QUARTER_PI / 16)
         {
+          i = (int) (x + p.tailleTete / 2 * cos(O));
+          j = (int) (y + p.tailleTete / 2 * sin(O));
+          
+          if((i > 0) && (i < width) && (j < height) && (j > 0)) {
+              this.matrix[i][j] = true;
+          }    // Fin if
+        }      // Fin for
+        
+        // Affichage des joueurs
+        if(! this.collisions.hasValue(p.id)){            // Si le joueur n'est pas hors jeu
           noStroke();
           fill(p.getColor());
           ellipse(p.getX(), p.getY(), 10, 10);
