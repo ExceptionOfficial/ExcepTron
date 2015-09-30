@@ -34,7 +34,6 @@ void setup() {
   frameRate(FRAMERATE);                 // 30 FPS
   smooth();                             // Anti-aliasing
   
-  map = new Carte();
   joueurs = new ArrayList();            // Création des joueurs
   km = new KeyManager();
   
@@ -43,6 +42,8 @@ void setup() {
   joueurs.add(new Player(1, "df"));
   joueurs.add(new Player(2, "45"));
   joueurs.add(new Player(3, "op"));
+  
+  map = new Carte(joueurs);
   
   for(int i = 1 ; i <= nbjoueurs ; i++) {
     joueurs.get(i-1).afficher();
@@ -65,6 +66,7 @@ void draw() { //<>//
     
     if(! map.getCollisions().hasValue(p.id)) {
       p.avancer();
+      p.afficher();
       map.verifCollisions(p);
     }
     
@@ -72,6 +74,14 @@ void draw() { //<>//
   }
   map.update(joueurs);
 }
+
+/* Actions :
+  
+  1 - Avancer
+  2 - Vérifier
+  3 - Remplacer jaune par blanc (implique de stocker les anciennes positions)
+  4 - Placer le nouveau jaune
+
 
 /* Tailles idéales :
       ellipse(x,y, 10, 10) pour la tête du snake
