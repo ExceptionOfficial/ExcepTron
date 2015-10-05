@@ -3,7 +3,7 @@
 /*                                                                          */
 /*          Projet ExcepTron : Création d'un snake multi-joueurs            */
 /*                                                                          */
-/*     exceptron.pde                                       Processing 3.0b6 */
+/*     exceptron.pde                                       Processing 3.0   */
 /****************************************************************************/
 
 final int SCREEN_WIDTH = 1366;
@@ -45,9 +45,9 @@ void setup() {
   
   map = new Carte(joueurs);
   
-  for(int i = 1 ; i <= nbjoueurs ; i++) {
-    joueurs.get(i-1).afficher();
-    joueurs.get(i-1).afficherDirection();
+  for(int i = 0 ; i < joueurs.size() ; i++) {
+    joueurs.get(i).afficher();/*
+    joueurs.get(i).afficherDirection();*/
   }
   
 }
@@ -55,8 +55,9 @@ void setup() {
 void draw() { //<>//
   Player p;                              // Variables temporaires
   
-  for(int i = 1 ; i <= nbjoueurs ; i++) {
-    p = joueurs.get(i - 1);              // Raccourci d'écriture
+  // controle + affichage
+  for(int i = 0 ; i < joueurs.size() ; i++) {
+    p = joueurs.get(i);              // Raccourci d'écriture
     
     if(km.isPressed(p.getControl().charAt(0))) {  // si la touche gauche est pressee
       p.changerDirection(true);
@@ -64,15 +65,21 @@ void draw() { //<>//
       p.changerDirection(false);
     }                                    // Fin if
     
-    if(! map.getCollisions().hasValue(p.id)) {
+    if(p.isAlive()) {
       p.avancer();
       p.afficher();
-      map.verifCollisions(p);
     }
-    
-    println("Collisions : " + map.getCollisions());
   }
+  
+  // verification des collisions
   map.update(joueurs);
+  
+  // mise a jour des etats
+  for(int i = 0 ; i < joueurs.size() ; i++) {
+    if(map.getCollisions().hasValue(joueurs.get(i).id)) {
+      joueurs.get(i).kill();
+    }
+  }
 }
 
 /* Actions :

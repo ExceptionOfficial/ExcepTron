@@ -1,11 +1,12 @@
 public class Player {
-    public int id;                        // ID du joueur
-    private PVector position;
-    private PVector direction;            // Direction x : r(vitesse), y : theta
-    private color couleur;                // Couleur du joueur
-    private int score;
-    private String controle;              // ? droite ou gauche ?
-    private PImage tete;
+    protected int id;                        // ID du joueur
+    protected PVector position;
+    protected PVector direction;            // Direction x : r(vitesse), y : theta
+    protected color couleur;                // Couleur du joueur
+    protected int score;
+    protected String controle;              // ? droite ou gauche ?
+    protected PImage tete;
+    protected boolean m_alive;
     
     public static final int tailleTete = 10;
   
@@ -25,7 +26,7 @@ public class Player {
         this.couleur = color(tirageCouleur, (255 - tirageCouleur) % 200, tirageCouleur*(tirageCouleur + 255) % 255);
         this.score = 0;                    // Score  = 0
         this.controle = c;                 // Contrôle envoyés par le setup
-        
+        this.m_alive = true;
         //this.tete = ;
     }
     
@@ -35,6 +36,10 @@ public class Player {
     
     public float getY() {
       return this.position.y;
+    }
+    
+    public int getId() {
+      return this.id;
     }
     
     public String getControl() {
@@ -76,6 +81,10 @@ public class Player {
     }
     
     public void kill() {
-      
+      m_alive = false;
+    }
+    
+    public boolean isAlive() {
+      return this.m_alive;
     }
 }
