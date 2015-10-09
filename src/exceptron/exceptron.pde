@@ -7,6 +7,7 @@
 /****************************************************************************/
 
 import processing.net.*;
+import controlP5.*;
 
 final int SCREEN_WIDTH = 800;
 final int SCREEN_HEIGHT = 600;          // Résolution HD
@@ -19,13 +20,14 @@ final int vert  = color(0,255,0);
 final int bleu  = color(0,0,255);
 final int noir  = color(0,0,0); 
 final int blanc = color(255,255,255);
+final int gris = color(111,111,111);
+final int darkred = color(171, 30, 30);
 
 ArrayList<Player> joueurs;          // Array de joueurs
 Carte map;                          // Carte
 KeyManager km;                      // Gestionnaire de clavier
-PImage logo;
-Server serveur;
-Client client;
+PImage logo, title;
+ControlP5 ctrl;
 
 // Paramètres
 int nbjoueurs;
@@ -43,6 +45,8 @@ void setup() {
   smooth();                             // Anti-aliasing
   
   logo = loadImage("exception.png");
+  title = loadImage("exceptron.png");
+  title.resize(600,200);
   joueurs = new ArrayList();            // Création des joueurs
   km = new KeyManager();
   
@@ -58,6 +62,12 @@ void setup() {
     joueurs.get(i).afficherDirection();
   }
   */
+  ctrl = new ControlP5(this);
+  ctrl.addButton("startGame")
+      .setPosition(175,275)
+      .setLabel("Start the party!")
+      .setVisible(false)
+      .updateSize();
 }
 
 void draw() { //<>//
@@ -66,11 +76,25 @@ void draw() { //<>//
     image(logo, (SCREEN_WIDTH/2)-(logo.width/2), (SCREEN_HEIGHT/2)-(logo.height/2));
     if(intro--==0) {
       step = 1;
-      background(noir);
-      map = new Carte(joueurs);
+      ((Controller)(ctrl.get("startGame"))).setVisible(true);
     }
   } else if(1==step) {     // menu
-  
+    background(color(200,200,200));
+    image(title, SCREEN_WIDTH/2-title.width/2, 0);
+    
+    noStroke();
+    fill(noir);
+    rect(SCREEN_WIDTH/2-title.width/2+10, title.height+10, title.width, (SCREEN_HEIGHT-title.height)/2-20);
+    fill(darkred);
+    rect(SCREEN_WIDTH/2-title.width/2, title.height, title.width, (SCREEN_HEIGHT-title.height)/2-20);
+    fill(gris);
+    rect(SCREEN_WIDTH/2-title.width/2, title.height, title.width, ((SCREEN_HEIGHT-title.height)/2-20)/6);
+    fill(noir);
+    rect(SCREEN_WIDTH/2-title.width/2+10, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20)+10, title.width, (SCREEN_HEIGHT-title.height)/2-20);
+    fill(darkred);
+    rect(SCREEN_WIDTH/2-title.width/2, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20), title.width, (SCREEN_HEIGHT-title.height)/2-20);
+    fill(gris);
+    rect(SCREEN_WIDTH/2-title.width/2, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20), title.width, ((SCREEN_HEIGHT-title.height)/2-20)/6);
   } else if(2==step) {     // corps du jeu
         Player p;                              // Variables temporaires
         
@@ -126,6 +150,13 @@ void draw() { //<>//
 /* A ajouter :
       A l'apparition du joueur, faire apparaître une flèche pour que celui-ci sache dans quelle direction il va se lancer.
 */
+
+public void startGame(int theValue) {
+  step = 2;
+  background(noir);
+  map = new Carte(joueurs);
+  ((Controller)(ctrl.get("startGame"))).setVisible(false);
+}
 
 void keyPressed() {
   km.update(key, true);
