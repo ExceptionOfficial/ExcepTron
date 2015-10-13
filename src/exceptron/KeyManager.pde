@@ -18,6 +18,9 @@ public class KeyManager {
     if(k < NB_KEY_MAX) {
       keys[k] = b;
     }
+    if(key == ESC) {
+      exit();
+    }
   }
   
   public boolean isPressed(int k) {

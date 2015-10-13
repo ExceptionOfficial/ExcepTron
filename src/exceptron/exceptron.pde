@@ -9,8 +9,8 @@
 import processing.net.*;
 import controlP5.*;
 
-final int SCREEN_WIDTH = 800;
-final int SCREEN_HEIGHT = 600;          // Résolution HD
+final int SCREEN_WIDTH = 1000;
+final int SCREEN_HEIGHT = 800;          // Résolution HD
 final int NB_PIXELS = SCREEN_WIDTH + SCREEN_HEIGHT;
 final int FRAMERATE = 30;               // Frames par seconde
 
@@ -38,7 +38,7 @@ void setup() {
   step = 0;                              // etape du programme
   intro = 30*4;
   
-  size(800, 600);                       // Résolution HD
+  size(1000, 800);                       // Résolution HD
   noStroke();                           // Pas de contours
   background(blanc);                     // Fond noir
   frameRate(FRAMERATE);                 // 30 FPS
@@ -68,6 +68,12 @@ void setup() {
       .setLabel("Start the party!")
       .setVisible(false)
       .updateSize();
+  for(int i = 1 ; i < 7 ; ++i) {
+    ctrl.addToggle("activateJ"+i)
+      .setPosition(SCREEN_WIDTH/2-title.width/2+SCREEN_WIDTH/32, title.height + SCREEN_HEIGHT/24 + i * SCREEN_HEIGHT/22)
+      .setLabel("Joueur " + i + " ON/OFF")
+      .setSize(SCREEN_WIDTH/32,SCREEN_HEIGHT/32);
+  }
 }
 
 void draw() { //<>//
@@ -90,11 +96,15 @@ void draw() { //<>//
     fill(gris);
     rect(SCREEN_WIDTH/2-title.width/2, title.height, title.width, ((SCREEN_HEIGHT-title.height)/2-20)/6);
     fill(noir);
+    textSize(((SCREEN_HEIGHT-title.height)/2-20)/16);
+    text("NOUVELLE PARTIE", (SCREEN_WIDTH/2-title.width/2)*1.1, title.height+((SCREEN_HEIGHT-title.height)/2-20)/12);
     rect(SCREEN_WIDTH/2-title.width/2+10, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20)+10, title.width, (SCREEN_HEIGHT-title.height)/2-20);
     fill(darkred);
     rect(SCREEN_WIDTH/2-title.width/2, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20), title.width, (SCREEN_HEIGHT-title.height)/2-20);
     fill(gris);
     rect(SCREEN_WIDTH/2-title.width/2, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20), title.width, ((SCREEN_HEIGHT-title.height)/2-20)/6);
+    fill(noir);
+    text("HIGH SCORES", (SCREEN_WIDTH/2-title.width/2)*1.1, (SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20)+((SCREEN_HEIGHT-title.height)/2-20)/12));
   } else if(2==step) {     // corps du jeu
         Player p;                              // Variables temporaires
         

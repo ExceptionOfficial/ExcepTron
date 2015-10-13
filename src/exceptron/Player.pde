@@ -15,8 +15,8 @@ public class Player {
         
         // Placement de départ : aléatoire pour le moment
         this.position = new PVector(
-            tailleTete / 2 + random(SCREEN_WIDTH - tailleTete/2),
-            tailleTete / 2 + random(SCREEN_HEIGHT - tailleTete/2));
+            tailleTete / 2 + random(SCREEN_WIDTH/10, SCREEN_WIDTH - SCREEN_WIDTH/10),
+            tailleTete / 2 + random(SCREEN_HEIGHT/10, SCREEN_HEIGHT - SCREEN_HEIGHT/10));
         
         // Direction de départ : 4 possibilités : haut, bas, droite, gauche
         this.direction = new PVector(3, random(-PI, PI));
