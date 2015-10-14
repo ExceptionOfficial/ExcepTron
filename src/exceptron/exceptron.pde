@@ -27,6 +27,7 @@ final int darkred = color(171, 30, 30);
 
 // Déclarations
 ArrayList<Player> joueurs;
+String[] cmd_tab = { "qs", "df", "qs", "op" };
 Carte map;
 KeyManager km;
 PImage logo, title;
@@ -50,14 +51,8 @@ void setup() {
   logo = loadImage("exception.png");
   title = loadImage("exceptron.png");
   title.resize(600,200);
-  joueurs = new ArrayList();            // Création des joueurs
+  joueurs = new ArrayList();         // Création des joueurs
   km = new KeyManager();
-  
-  /* ajout des joueurs */
-  joueurs.add(new Player(0, "qs"));
-  joueurs.add(new Player(1, "df"));
-  joueurs.add(new Player(2, "qs"));
-  joueurs.add(new Player(3, "op"));
   
   // Définition des contrôles
   ctrl = new ControlP5(this);
@@ -76,6 +71,8 @@ void setup() {
       //.setVisible(false)
       .setSize(SCREEN_WIDTH/32,SCREEN_HEIGHT/32);
   }
+  
+  
 }
 
 void draw() { //<>//
@@ -89,26 +86,7 @@ void draw() { //<>//
   }
   // Menu
   else if(1==step) {
-    background(color(200,200,200));
-    image(title, SCREEN_WIDTH/2-title.width/2, 0);
-    
-    noStroke();
-    fill(noir);
-    rect(SCREEN_WIDTH/2-title.width/2+10, title.height+10, title.width, (SCREEN_HEIGHT-title.height)/2-20);
-    fill(darkred);
-    rect(SCREEN_WIDTH/2-title.width/2, title.height, title.width, (SCREEN_HEIGHT-title.height)/2-20);
-    fill(gris);
-    rect(SCREEN_WIDTH/2-title.width/2, title.height, title.width, ((SCREEN_HEIGHT-title.height)/2-20)/6);
-    fill(noir);
-    textSize(((SCREEN_HEIGHT-title.height)/2-20)/16);
-    text("NOUVELLE PARTIE", (SCREEN_WIDTH/2-title.width/2)*1.1, title.height+((SCREEN_HEIGHT-title.height)/2-20)/12);
-    rect(SCREEN_WIDTH/2-title.width/2+10, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20)+10, title.width, (SCREEN_HEIGHT-title.height)/2-20);
-    fill(darkred);
-    rect(SCREEN_WIDTH/2-title.width/2, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20), title.width, (SCREEN_HEIGHT-title.height)/2-20);
-    fill(gris);
-    rect(SCREEN_WIDTH/2-title.width/2, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20), title.width, ((SCREEN_HEIGHT-title.height)/2-20)/6);
-    fill(noir);
-    text("HIGH SCORES", (SCREEN_WIDTH/2-title.width/2)*1.1, (SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20)+((SCREEN_HEIGHT-title.height)/2-20)/12));
+    BackgroundMenu();
   }
   // Game
   else if(2==step) {
@@ -154,6 +132,7 @@ public void startGame(int theValue) {
   background(noir);
   map = new Carte(joueurs);
   ((Controller)(ctrl.get("startGame"))).setVisible(false);
+  CreationPlayers();
 }
 
 void keyPressed() {
