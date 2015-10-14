@@ -9,10 +9,12 @@
 import processing.net.*;
 import controlP5.*;
 
+// Constantes
 final int SCREEN_WIDTH = 1000;
-final int SCREEN_HEIGHT = 800;          // Résolution HD
+final int SCREEN_HEIGHT = 800;
 final int NB_PIXELS = SCREEN_WIDTH + SCREEN_HEIGHT;
-final int FRAMERATE = 30;               // Frames par seconde
+final int FRAMERATE = 30;
+final int NB_JOUEURS_MAX = 6;
 
 // Couleurs
 final int rouge = color(255,0,0);  
@@ -23,9 +25,10 @@ final int blanc = color(255,255,255);
 final int gris = color(111,111,111);
 final int darkred = color(171, 30, 30);
 
-ArrayList<Player> joueurs;          // Array de joueurs
-Carte map;                          // Carte
-KeyManager km;                      // Gestionnaire de clavier
+// Déclarations
+ArrayList<Player> joueurs;
+Carte map;
+KeyManager km;
 PImage logo, title;
 ControlP5 ctrl;
 
@@ -34,15 +37,15 @@ int nbjoueurs;
 int step, intro;
 
 void setup() {
-  nbjoueurs = 4;                        // Nombre de joueurs
-  step = 0;                              // etape du programme
-  intro = 30*4;
+  nbjoueurs = 4;                    // Nombre de joueurs                      A SUPPRIMER (quand le menu sera op)
+  step = 0;                         // Etape du programme
+  intro = 30*4;                     // Durée de l'intro : 4sec
   
-  size(1000, 800);                       // Résolution HD
-  noStroke();                           // Pas de contours
-  background(blanc);                     // Fond noir
-  frameRate(FRAMERATE);                 // 30 FPS
-  smooth();                             // Anti-aliasing
+  size(1000, 800);                  
+  noStroke();                       // Pas de contours
+  background(blanc);                // Fond noir
+  frameRate(FRAMERATE);             // 30 FPS
+  smooth();                         // Anti-aliasing
   
   logo = loadImage("exception.png");
   title = loadImage("exceptron.png");
@@ -56,35 +59,36 @@ void setup() {
   joueurs.add(new Player(2, "qs"));
   joueurs.add(new Player(3, "op"));
   
-  /*
-  for(int i = 0 ; i < joueurs.size() ; i++) {
-    joueurs.get(i).afficher();
-    joueurs.get(i).afficherDirection();
-  }
-  */
+  // Définition des contrôles
   ctrl = new ControlP5(this);
+  // Bouton de début de partie
   ctrl.addButton("startGame")
       .setPosition(175,275)
       .setLabel("Start the party!")
       .setVisible(false)
       .updateSize();
-  for(int i = 1 ; i < 7 ; ++i) {
+  
+  // Boutons pour ajouter des joueurs
+  for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
     ctrl.addToggle("activateJ"+i)
       .setPosition(SCREEN_WIDTH/2-title.width/2+SCREEN_WIDTH/32, title.height + SCREEN_HEIGHT/24 + i * SCREEN_HEIGHT/22)
       .setLabel("Joueur " + i + " ON/OFF")
+      //.setVisible(false)
       .setSize(SCREEN_WIDTH/32,SCREEN_HEIGHT/32);
   }
 }
 
 void draw() { //<>//
-  
-  if(0==step) {            // introduction
+  // Introduction / Crédits
+  if(0==step) {
     image(logo, (SCREEN_WIDTH/2)-(logo.width/2), (SCREEN_HEIGHT/2)-(logo.height/2));
     if(intro--==0) {
-      step = 1;
+      step = 1;     // Passage au menu       
       ((Controller)(ctrl.get("startGame"))).setVisible(true);
     }
-  } else if(1==step) {     // menu
+  }
+  // Menu
+  else if(1==step) {
     background(color(200,200,200));
     image(title, SCREEN_WIDTH/2-title.width/2, 0);
     
@@ -105,7 +109,9 @@ void draw() { //<>//
     rect(SCREEN_WIDTH/2-title.width/2, SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20), title.width, ((SCREEN_HEIGHT-title.height)/2-20)/6);
     fill(noir);
     text("HIGH SCORES", (SCREEN_WIDTH/2-title.width/2)*1.1, (SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20)+((SCREEN_HEIGHT-title.height)/2-20)/12));
-  } else if(2==step) {     // corps du jeu
+  }
+  // Game
+  else if(2==step) {
         Player p;                              // Variables temporaires
         
         // controle + affichage
@@ -138,24 +144,6 @@ void draw() { //<>//
   }
 }
 
-/* Actions :
-  
-  1 - Avancer
-  2 - Vérifier
-  3 - Remplacer jaune par blanc (implique de stocker les anciennes positions)
-  4 - Placer le nouveau jaune
-
-
-/* Tailles idéales :
-      ellipse(x,y, 10, 10) pour la tête du snake
-      strokeWeight(10) pour le corps
-*/
-
-/*
-   Dans le gestionnaire de collision penser à ajouter les murs : ne pas pouvoir passer un mur et du fait de la taille
-   de 10, ne pas pouvoir approcher la tête du snake à moins de 5px du mur.
-   Pour rappel dans CurveFever, toucher le mur = mort
-*/
 
 /* A ajouter :
       A l'apparition du joueur, faire apparaître une flèche pour que celui-ci sache dans quelle direction il va se lancer.
