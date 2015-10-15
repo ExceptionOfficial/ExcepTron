@@ -10,8 +10,8 @@ import processing.net.*;
 import controlP5.*;
 
 // Constantes
-final int SCREEN_WIDTH = 1000;
-final int SCREEN_HEIGHT = 800;
+final int SCREEN_WIDTH = 1920;
+final int SCREEN_HEIGHT = 1080;
 final int NB_PIXELS = SCREEN_WIDTH + SCREEN_HEIGHT;
 final int FRAMERATE = 30;
 final int NB_JOUEURS_MAX = 6;
@@ -27,22 +27,21 @@ final int darkred = color(171, 30, 30);
 
 // Déclarations
 ArrayList<Player> joueurs;
-String[] cmd_tab = { "qs", "df", "qs", "op" };
+String[] cmd_tab = { "qs", "gh", "kl", "89", "bn", "23" };
 Carte map;
 KeyManager km;
 PImage logo, title;
 ControlP5 ctrl;
 
 // Paramètres
-int nbjoueurs;
 int step, intro;
 
 void setup() {
-  nbjoueurs = 4;                    // Nombre de joueurs                      A SUPPRIMER (quand le menu sera op)
   step = 0;                         // Etape du programme
-  intro = 30*4;                     // Durée de l'intro : 4sec
+  intro = 30*2;                     // Durée de l'intro : 4sec
   
-  size(1000, 800);                  
+  //size(1920, 1080);
+  fullScreen();
   noStroke();                       // Pas de contours
   background(blanc);                // Fond noir
   frameRate(FRAMERATE);             // 30 FPS
@@ -68,11 +67,9 @@ void setup() {
     ctrl.addToggle("activateJ"+i)
       .setPosition(SCREEN_WIDTH/2-title.width/2+SCREEN_WIDTH/32, title.height + SCREEN_HEIGHT/24 + i * SCREEN_HEIGHT/22)
       .setLabel("Joueur " + i + " ON/OFF")
-      //.setVisible(false)
+      .setVisible(false)
       .setSize(SCREEN_WIDTH/32,SCREEN_HEIGHT/32);
-  }
-  
-  
+  }  
 }
 
 void draw() { //<>//
@@ -82,6 +79,9 @@ void draw() { //<>//
     if(intro--==0) {
       step = 1;     // Passage au menu       
       ((Controller)(ctrl.get("startGame"))).setVisible(true);
+      for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
+        ((Controller)(ctrl.get("activateJ"+i))).setVisible(true);
+      }
     }
   }
   // Menu
@@ -128,11 +128,16 @@ void draw() { //<>//
 */
 
 public void startGame(int theValue) {
-  step = 2;
+  if(step<2) {
   background(noir);
   map = new Carte(joueurs);
   ((Controller)(ctrl.get("startGame"))).setVisible(false);
+      for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
+        ((Controller)(ctrl.get("activateJ"+i))).setVisible(false);
+      }
   CreationPlayers();
+  step = 2;
+  }
 }
 
 void keyPressed() {

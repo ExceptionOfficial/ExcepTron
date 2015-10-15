@@ -21,13 +21,10 @@ void BackgroundMenu()
   text("HIGH SCORES", (SCREEN_WIDTH/2-title.width/2)*1.1, (SCREEN_HEIGHT-((SCREEN_HEIGHT-title.height)/2-20+20)+((SCREEN_HEIGHT-title.height)/2-20)/12));
 }
 
-void CreationPlayers()
-{
-  for(int i = 1 ; i <= NB_JOUEURS_MAX ; i++)
-  {
-    if(ctrl.getValue("activateJ"+i) == 1.0)            // Bouton Toggle activé
-    {
-      joueurs.add(i, new Player(i, cmd_tab[i]));       // i est l'indice et l'ID du joueur
+void CreationPlayers() {
+  for(int i = 0 ; i < NB_JOUEURS_MAX ; i++) {
+    if(((Toggle)ctrl.get("activateJ"+((int)i+1))).getState()) {           // Bouton Toggle activé
+      joueurs.add(new Player(i, cmd_tab[i]));       // i est l'indice et l'ID du joueur
     }
   }
 }
