@@ -15,17 +15,33 @@ public class Menu {
     // Bouton de début de partie
     m_ctrl.addButton("startGame")
       .setPosition(SCREEN_WIDTH * 10/100, m_title.height + (SCREEN_HEIGHT - m_title.height) * 80 / 100 + 30)
+      .setSize(SCREEN_WIDTH * 35 / 100, SCREEN_HEIGHT/20)
       .setLabel("Start the party!")
-      .setVisible(false)
-      .setSize(SCREEN_WIDTH * 35 / 100, SCREEN_HEIGHT/20);
+      .setVisible(false);
+      
   
     // Boutons pour ajouter des joueurs
     for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
       m_ctrl.addToggle("activateJ"+i)
-        .setPosition(SCREEN_WIDTH/2 - m_title.width/2+SCREEN_WIDTH/32, m_title.height +(SCREEN_HEIGHT - m_title.height) * 15 / 100 + i * SCREEN_HEIGHT/22)
-        .setLabel("Joueur " + i + " ON/OFF")
-        .setVisible(false)
-        .setSize(SCREEN_WIDTH/32,SCREEN_HEIGHT/32);
+        .setPosition(SCREEN_WIDTH * 10/100 + 30, m_title.height +(SCREEN_HEIGHT - m_title.height) * 12 / 100 + i * 50)
+        .setSize(40,40)
+        .setLabelVisible(false)
+        .setVisible(false);
+    }
+        
+    // Formulaires pour les noms
+    noStroke();      fill(blanc);
+    for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
+      m_ctrl.addTextfield("inputJ" + i)
+       .setPosition(SCREEN_WIDTH * 20/100, m_title.height +(SCREEN_HEIGHT - m_title.height) * 12 / 100 + i * 50)
+       .setSize(200,40)
+       .setLabelVisible(false)
+//       .setFont(font)
+//       .setFocus(true)
+       .setColorBackground(blanc)
+       .setColor(noir)
+       //.setVisible(false)
+     ;
     }
   }
   
@@ -76,4 +92,17 @@ public class Menu {
     }
   }
 }
+
+/*
+cp5.addTextfield("input")
+     .setPosition(20,100)
+     .setSize(200,40)
+     .setFont(font)
+     .setFocus(true)
+     .setColor(color(255,0,0))
+     ;
+     
+      text(cp5.get(Textfield.class,"input").getText(), 360,130);
+      
+*/
   
