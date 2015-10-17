@@ -7,11 +7,10 @@
 /****************************************************************************/
 
 import processing.net.*;
-import controlP5.*;
 
 // Constantes
-final int SCREEN_WIDTH = 1920;
-final int SCREEN_HEIGHT = 1080;
+final int SCREEN_WIDTH = 1366;
+final int SCREEN_HEIGHT = 768;
 final int NB_PIXELS = SCREEN_WIDTH + SCREEN_HEIGHT;
 final int FRAMERATE = 30;
 final int NB_JOUEURS_MAX = 6;
@@ -30,8 +29,8 @@ ArrayList<Player> joueurs;
 String[] cmd_tab = { "qs", "gh", "kl", "89", "bn", "23" };
 Carte map;
 KeyManager km;
-PImage logo, title;
-ControlP5 ctrl;
+PImage logo;
+Menu m;
 
 // Paramètres
 int step, intro;
@@ -40,7 +39,6 @@ void setup() {
   step = 0;                         // Etape du programme
   intro = 30*2;                     // Durée de l'intro : 4sec
   
-  //size(1920, 1080);
   fullScreen();
   noStroke();                       // Pas de contours
   background(blanc);                // Fond noir
@@ -48,28 +46,9 @@ void setup() {
   smooth();                         // Anti-aliasing
   
   logo = loadImage("exception.png");
-  title = loadImage("exceptron.png");
-  title.resize(600,200);
   joueurs = new ArrayList();         // Création des joueurs
   km = new KeyManager();
-  
-  // Définition des contrôles
-  ctrl = new ControlP5(this);
-  // Bouton de début de partie
-  ctrl.addButton("startGame")
-      .setPosition(175,275)
-      .setLabel("Start the party!")
-      .setVisible(false)
-      .updateSize();
-  
-  // Boutons pour ajouter des joueurs
-  for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
-    ctrl.addToggle("activateJ"+i)
-      .setPosition(SCREEN_WIDTH/2-title.width/2+SCREEN_WIDTH/32, title.height + SCREEN_HEIGHT/24 + i * SCREEN_HEIGHT/22)
-      .setLabel("Joueur " + i + " ON/OFF")
-      .setVisible(false)
-      .setSize(SCREEN_WIDTH/32,SCREEN_HEIGHT/32);
-  }  
+  m = new Menu(this);
 }
 
 void draw() { //<>//
@@ -78,15 +57,11 @@ void draw() { //<>//
     image(logo, (SCREEN_WIDTH/2)-(logo.width/2), (SCREEN_HEIGHT/2)-(logo.height/2));
     if(intro--==0) {
       step = 1;     // Passage au menu       
-      ((Controller)(ctrl.get("startGame"))).setVisible(true);
-      for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
-        ((Controller)(ctrl.get("activateJ"+i))).setVisible(true);
-      }
     }
   }
   // Menu
   else if(1==step) {
-    BackgroundMenu();
+    m.display();
   }
   // Game
   else if(2==step) {
@@ -129,15 +104,11 @@ void draw() { //<>//
 
 public void startGame(int theValue) {
   if(step<2) {
-  background(noir);
-  map = new Carte(joueurs);
-  ((Controller)(ctrl.get("startGame"))).setVisible(false);
-      for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
-        ((Controller)(ctrl.get("activateJ"+i))).setVisible(false);
-      }
-  CreationPlayers();
-  step = 2;
+    m.launch();
+    map = new Carte(joueurs);
+    step = 2;
   }
+  
 }
 
 void keyPressed() {
