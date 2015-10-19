@@ -35,13 +35,12 @@ public class Menu {
       m_ctrl.addTextfield("inputJ" + i)
        .setPosition(SCREEN_WIDTH * 20/100, m_title.height +(SCREEN_HEIGHT - m_title.height) * 12 / 100 + i * 50)
        .setSize(200,40)
-       .setLabelVisible(false)
-//       .setFont(font)
-//       .setFocus(true)
        .setColorBackground(blanc)
        .setColor(noir)
-       //.setVisible(false)
-     ;
+       .setFont(createFont("Comic sans MS", 20))
+       .setText("Joueur " + i)
+       .setVisible(false)
+       .getCaptionLabel().setVisible(false);              // .setLabelVisible(false) ne marche pas sur un Textfield, issue connue de ControlP5
     }
   }
   
@@ -58,6 +57,7 @@ public class Menu {
     rect(SCREEN_WIDTH * 10/100 + 10, m_title.height + (SCREEN_HEIGHT - m_title.height) * 80 / 100 + 40, SCREEN_WIDTH * 35 / 100, SCREEN_HEIGHT/20);
       for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
         ((Controller)(m_ctrl.get("activateJ"+i))).setVisible(true);
+        ((Controller)(m_ctrl.get("inputJ"+i))).setVisible(true);
       }
     
   }
@@ -78,10 +78,11 @@ public class Menu {
   public void launch() {
     background(noir);                  // Réinitialisation du background
     
-    // Disparition des boutons
+    // Disparition des boutons et des champs
     ((Controller)(m_ctrl.get("startGame"))).setVisible(false);
     for(int i = 1 ; i <= NB_JOUEURS_MAX ; ++i) {
       ((Controller)(m_ctrl.get("activateJ"+i))).setVisible(false);
+      ((Controller)(m_ctrl.get("inputJ"+i))).setVisible(false);
     }
     
     // Création des joueurs

@@ -9,8 +9,8 @@
 import processing.net.*;
 
 // Constantes
-final int SCREEN_WIDTH = 1366;
-final int SCREEN_HEIGHT = 768;
+final int SCREEN_WIDTH = 1920;
+final int SCREEN_HEIGHT = 1080;
 final int NB_PIXELS = SCREEN_WIDTH + SCREEN_HEIGHT;
 final int FRAMERATE = 30;
 final int NB_JOUEURS_MAX = 6;
